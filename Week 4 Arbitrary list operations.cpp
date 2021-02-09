@@ -133,7 +133,7 @@ void List::insert(int item_pos, int item_val) {
     }
 
     ++list_length;
-    cout << "list length: " << list_length << endl;
+    //cout << "list length: " << list_length << endl;
 }
 
 // O(n)
@@ -142,11 +142,13 @@ int List::remove(int item_pos) {
     int steps = 0;
     int removed_val = 0;
 
+    //empty list condition
     if (list_length == 0) {
         cout << "there's nothing to remove";
         return 0;
     }
 
+    //removes head node.
     if (item_pos == 0) {
         while (steps != (list_length - 2)) {
 
@@ -160,7 +162,8 @@ int List::remove(int item_pos) {
         head = current;
         return removed_val; //breaks without this return for some reason.
     }
-
+    
+    // removes tail node
     if (item_pos >= list_length) {
         removed_val = tail->value;
         temp = current->next;
@@ -169,7 +172,7 @@ int List::remove(int item_pos) {
         
     }
 
-    
+    // removes arbitrary node
     else {
         while (steps != (list_length - item_pos - 2)) {
 
@@ -183,12 +186,34 @@ int List::remove(int item_pos) {
         free(temp);
     }
     
-    //cout << removed_val << endl;
+
     --list_length;
     return removed_val;
 }
 
+//
+int List::get(int item_pos) {
 
+    int item_value = 0;
+    if (list_length == 0) {
+        cout << "no ist to get values from." << endl;
+        return 0;
+    }
+
+    if (item_pos == 0) {
+        return head->value;
+    }
+    
+    current = tail;
+    for (int i = 0; i < (list_length - item_pos); i++) {
+
+        current = current->next;
+       
+    }
+    item_value = current->value;
+    //cout << "got value: "<< item_value << endl;
+    return item_value;
+}
 
 void List::menu() {
 
@@ -227,9 +252,19 @@ void List::menu() {
 
 // ~~~~testing stuff~~~~
 
+
+void Test::test1_get() {
+    for (int i = 0; i < 10; i++) {
+
+        push(i);
+    }
+    print_list();
+    get(0);// For some reason that I dont entirely understand when item_pos is any number larger than the length of the list it doesn't have any issues. its a feature not a bug :)
+    get(5);// works as normal 
+}
 //test1 demonstrates insertion at the head, tail, and an arbitary location.
 void Test::test1_insert() {
-
+    
     // populates the list
     for (int i = 0; i < 10; i++) {
 
@@ -238,13 +273,26 @@ void Test::test1_insert() {
 
     //prints the stacks values
     print_list();
-
+    //using our get function we can confirm that the values are inserted into the correct position.
     insert(11, 18);
+    if (get(11) == 18) {
+        cout << "tail insertion pass;" << endl;
+    }
     insert(0, 42);
+    if (get(0) == 42) {
+        cout << "head insertion pass;" << endl;
+    }
+
     insert(3, 99);
+    if (get(3) == 99) {
+        cout << "arbitrary insertion pass;" << endl;
+    }
+   
+    print_list();
+ 
     peek();
 
-    print_list();
+    
     
 
 }
@@ -284,13 +332,15 @@ int main()
 
     //Testing
 
+    //get tests
+    //testy.test1_get();
 
     //insert tests
-    //testy.test1_insert();
+    testy.test1_insert();
 
 
     // remove tests
-    testy.test1_remove();
+    //testy.test1_remove();
     //testy.test2_remove();
 
     cout << "Successful Exit." << endl;

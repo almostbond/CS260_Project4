@@ -259,8 +259,9 @@ void Test::test1_get() {
         push(i);
     }
     print_list();
-    get(0);// For some reason that I dont entirely understand when item_pos is any number larger than the length of the list it doesn't have any issues. its a feature not a bug :)
-    get(5);// works as normal 
+    cout << get(0) << endl;
+    cout << get(20) << endl;// For some reason that I dont entirely understand when item_pos is any number larger than the length of the list it doesn't have any issues. its a feature not a bug :)
+    cout << get(5) << endl;// works as normal 
 }
 //test1 demonstrates insertion at the head, tail, and an arbitary location.
 void Test::test1_insert() {

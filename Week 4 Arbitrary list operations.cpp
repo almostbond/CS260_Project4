@@ -1,12 +1,44 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+
+@almostbond
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+
+almostbond
+/
+CS260_Project4
+1
+00
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+CS260_Project4 / Week 4 Arbitrary list operations.cpp
+@almostbond
+almostbond Add files via upload
+Latest commit 566daf3 29 days ago
+History
+1 contributor
+350 lines(247 sloc)  7.22 KB
+
 // Week 3 project.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 /*uses a linked-list to store values in the queue
-
 has an enqueue method that will appropriately add a value to the back of the queue as an appropriate element
-
 has a dequeue method that will appropriately remove an element from the front of the queue and return its value
-
 Optionally has a peek method that returns the value at the front of the queue without removing it
 Bonus if you also create an array based Queue!*/
 
@@ -20,7 +52,7 @@ using namespace std;
 
 // constructors.
 List::List() {
-    
+
     list_length = 0;
     head = NULL;
     tail = NULL;
@@ -97,14 +129,14 @@ void List::print_list() {
 // O(n) complexity; After a fair amount of effort I have come to the conclusion that 
 //insert is unable to have the same functionality as push without being exceedingly complicated.
 void List::insert(int item_pos, int item_val) {
-    
+
     int steps = 0;
     current = tail;
 
     node* new_node = new node;
     new_node->value = item_val;
 
-    
+
     if (item_pos <= 0) {
         head->next = new_node;
         head = new_node;
@@ -116,7 +148,7 @@ void List::insert(int item_pos, int item_val) {
         new_node->next = tail;
         tail = new_node;
     }
-        
+
     if (item_pos != 0 and item_pos <= list_length) {
         while (steps != (list_length - item_pos)) {
 
@@ -128,8 +160,8 @@ void List::insert(int item_pos, int item_val) {
         temp = current->next;
         new_node->next = temp;
         current->next = new_node;
-        
-        
+
+
     }
 
     ++list_length;
@@ -155,21 +187,21 @@ int List::remove(int item_pos) {
             steps++;
             current = current->next;
         }
-        
+
         removed_val = head->value;
-        free(head);       
+        free(head);
         current->next = NULL;
         head = current;
         return removed_val; //breaks without this return for some reason.
     }
-    
+
     // removes tail node
     if (item_pos >= list_length) {
         removed_val = tail->value;
         temp = current->next;
         free(tail);
         tail = temp;
-        
+
     }
 
     // removes arbitrary node
@@ -185,7 +217,7 @@ int List::remove(int item_pos) {
         current->next = temp->next;
         free(temp);
     }
-    
+
 
     --list_length;
     return removed_val;
@@ -203,12 +235,12 @@ int List::get(int item_pos) {
     if (item_pos == 0) {
         return head->value;
     }
-    
+
     current = tail;
     for (int i = 0; i < (list_length - item_pos); i++) {
 
         current = current->next;
-       
+
     }
     item_value = current->value;
     //cout << "got value: "<< item_value << endl;
@@ -265,7 +297,7 @@ void Test::test1_get() {
 }
 //test1 demonstrates insertion at the head, tail, and an arbitary location.
 void Test::test1_insert() {
-    
+
     // populates the list
     for (int i = 0; i < 10; i++) {
 
@@ -288,13 +320,13 @@ void Test::test1_insert() {
     if (get(3) == 99) {
         cout << "arbitrary insertion pass;" << endl;
     }
-   
+
     print_list();
- 
+
     peek();
 
-    
-    
+
+
 
 }
 
@@ -306,7 +338,7 @@ void Test::test1_remove() {
         push(i);
     }
 
-    
+
     print_list();
     remove(3);
     print_list();
